@@ -1,0 +1,11 @@
+const express=require('express');
+const router=express.Router();
+const productRouter=require('./productRoutes');
+const authRouter=require('./authRoutes');
+const wishListRouter=require('./wishListRoutes');
+const cartRouter=require('./cartRoutes');
+router.use('/auth',authRouter);
+router.use('/product',productRouter);
+router.use('/wishlist',wishListRouter);
+router.use('/cart',cartRouter);
+module.exports=router;  
