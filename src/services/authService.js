@@ -19,9 +19,7 @@ const signup = async (body) => {
   return user;
 };
 const getUser = async (_id) => {
-  const user = await User.findById({ _id },{ email, password },{email:1,password:1,name:1})
-    // .populate("wishlist")
-    // .populate("cart.product");
+  const user = await User.findById({ _id },{email:1,password:1,name:1})
   return user;
 };
 module.exports = {

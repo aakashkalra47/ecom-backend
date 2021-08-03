@@ -1,7 +1,12 @@
 const Products=require('../models/product/product');
 const getProducts=async (parameters)=>{
-    const {category}=parameters;
-    const products=await Products.find({category});
+    const {category, ids}=parameters;
+    let products=[];
+    if (category) {
+        products=await Products.find({category});
+    } else {
+        products = await Products.find({ _id: { $in: ids } })
+    }
     return products; 
 }
 const getProductById=async(id)=>{

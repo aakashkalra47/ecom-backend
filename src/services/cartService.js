@@ -1,8 +1,6 @@
 const User = require("../models/users/user");
 const getCartItems = async (userId) => {
-  const user = await User.findOne({ _id: userId },{cart:1}).populate(
-    "cart.productId"
-  );
+  const user = await User.findOne({ _id: userId }, { cart: 1 });
   if (!user) {
     let error = new Error("User Not Found");
     error.status = 404;
@@ -25,8 +23,6 @@ const addItemToCart = async (userId, productId, size) => {
     },
     { new: true }
   );
-  // .populate("wishlist")
-  // .populate("cart.product");
   if (!updatedUser) {
     let error = new Error("User Not Found");
     error.status = 404;
@@ -40,6 +36,7 @@ const removeCartItem = async (userId, productId, size) => {
     productId,
     size,
   };
+  console.log('1..item',item);
   const updatedUser = await User.findOneAndUpdate(
     { _id: userId },
     {
@@ -49,8 +46,6 @@ const removeCartItem = async (userId, productId, size) => {
     },
     { new: true }
   );
-  // .populate("wishlist")
-  // .populate("cart.product");
   if (!updatedUser) {
     let error = new Error("User Not Found");
     error.status = 404;
@@ -60,14 +55,15 @@ const removeCartItem = async (userId, productId, size) => {
   }
 };
 const moveToWishList = async (userId, productId, size) => {
+  const item = {
+    productId,
+    size,
+  };
   const updatedUser = await User.findOneAndUpdate(
     { _id: userId },
     {
       $pull: {
-        cart: {
-          productId,
-          size,
-        },
+        cart: item,
       },
       $push: {
         wishlist: productId,
@@ -75,20 +71,18 @@ const moveToWishList = async (userId, productId, size) => {
     },
     { new: true }
   )
-    .populate("wishlist")
-    .populate("cart.product");
-
   if (!updatedUser) {
     let error = new Error("User Not Found");
     error.status = 404;
     throw error;
   } else {
-    return updatedUser;
+    return item;
+
   }
 };
 module.exports = {
   addItemToCart,
   removeCartItem,
   moveToWishList,
-  getCartItems
+  getCartItems,
 };

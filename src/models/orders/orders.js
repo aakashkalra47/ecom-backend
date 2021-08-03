@@ -2,8 +2,9 @@ const mongoose = require("mongoose");
 const UserSchema = mongoose.Schema({
     amount:{type:Number,required:true},
     items:[{
-        product:{type:String,required:true},
-        qunatity:{type:Number,required:true},
+        productId:{type:String,required:true},
+        size:{type:String,required:true},
+        // qunatity:{type:Number,required:true},
     }],
     paymentStatus:{type:Boolean,required:true},
     paymentMode:{type:String,required:true},

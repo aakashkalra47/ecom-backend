@@ -24,10 +24,9 @@ router.get("/",verifyToken, async (req, res) => {
 });
 router.put("/remvoe",verifyToken, async (req, res) => {
   try {
-    const user = await removeWishListItem(req.userId,req.body.productId);
-    return res.status(200).json({ result: user });
+    const id = await removeWishListItem(req.userId,req.body.productId);
+    return res.status(200).json({ result: id });
   } catch (e) {
-    // console.log('1..e',e); 
     const { status, message } = errorFormatter(e);
     return res.status(status).json({ message });
   }
