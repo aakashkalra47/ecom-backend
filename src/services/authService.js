@@ -2,9 +2,7 @@ const User = require("../models/users/user");
 const { generateToken } = require("../utils/jwtToken");
 const login = async (body) => {
   const { email, password } = body;
-  const foundUser = await User.findOne({ email, password })
-    .populate("wishlist")
-    .populate("cart.product");
+  const foundUser = await User.findOne({ email, password },{email:1,password:1,name:1});
   if (!foundUser) {
     let error = new Error("User Not Found");
     error.status = 404;
@@ -21,9 +19,9 @@ const signup = async (body) => {
   return user;
 };
 const getUser = async (_id) => {
-  const user = await User.findById({ _id })
-    .populate("wishlist")
-    .populate("cart.product");
+  const user = await User.findById({ _id },{ email, password },{email:1,password:1,name:1})
+    // .populate("wishlist")
+    // .populate("cart.product");
   return user;
 };
 module.exports = {

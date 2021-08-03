@@ -11,11 +11,20 @@ const UserSchema = mongoose.Schema({
   ],
   cart: [
     {
-      product: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
       size:{type:String,required:true}
     }
     ,
   ],
+  address:[
+    {
+      address:{type:String},  
+      city:{type:String},
+      state:{type:String},
+      landmark:{type:String},  
+      pincode:{type:Number},  
+    }
+  ]
 });
 
 module.exports = mongoose.model("User", UserSchema);
