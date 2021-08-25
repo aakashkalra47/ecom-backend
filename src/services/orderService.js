@@ -6,13 +6,26 @@ const postOrder = async (userId, orderData) => {
   order.paymentMode = "COD";
   await order.save();
   if (!order) {
-    let error = new Error("User Not Found");
+    let error = new Error("Error in placing order");
     error.status = 404;
     throw error;
   } else {
     return order;
   }
 };
+
+const getAllOrders = async (user) => {
+  const orders = await Order.find({ user }).populate("items.productId");
+  if (!orders) {
+    let error = new Error("Orders Not Found");
+    error.status = 404;
+    throw error;
+  } else {
+    return orders;
+  }
+};
+
 module.exports = {
   postOrder,
+  getAllOrders,
 };
