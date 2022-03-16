@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret=process.env.JWT_SECRET;
+const secret=process.env.JWT_SECRET||'secret';
 require('dotenv');
 exports.generateToken=(userId)=>{
     const token = jwt.sign({userId},secret ,{expiresIn:'10d'});
@@ -9,4 +9,4 @@ exports.generateToken=(userId)=>{
         throw e;
     }
     return token;
-}
+}   
