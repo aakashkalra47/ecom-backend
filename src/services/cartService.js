@@ -1,8 +1,9 @@
-const User = require("../models/users/user");
+const User = require('../models/users/user');
+
 const getCartItems = async (userId) => {
   const user = await User.findOne({ _id: userId }, { cart: 1 });
   if (!user) {
-    let error = new Error("User Not Found");
+    const error = new Error('User Not Found');
     error.status = 404;
     throw error;
   } else {
@@ -21,10 +22,10 @@ const addItemToCart = async (userId, productId, size) => {
         cart: newItem,
       },
     },
-    { new: true }
+    { new: true },
   );
   if (!updatedUser) {
-    let error = new Error("User Not Found");
+    const error = new Error('User Not Found');
     error.status = 404;
     throw error;
   } else {
@@ -36,7 +37,6 @@ const removeCartItem = async (userId, productId, size) => {
     productId,
     size,
   };
-  console.log('1..item',item);
   const updatedUser = await User.findOneAndUpdate(
     { _id: userId },
     {
@@ -44,10 +44,10 @@ const removeCartItem = async (userId, productId, size) => {
         cart: item,
       },
     },
-    { new: true }
+    { new: true },
   );
   if (!updatedUser) {
-    let error = new Error("User Not Found");
+    const error = new Error('User Not Found');
     error.status = 404;
     throw error;
   } else {
@@ -69,15 +69,14 @@ const moveToWishList = async (userId, productId, size) => {
         wishlist: productId,
       },
     },
-    { new: true }
-  )
+    { new: true },
+  );
   if (!updatedUser) {
-    let error = new Error("User Not Found");
+    const error = new Error('User Not Found');
     error.status = 404;
     throw error;
   } else {
     return item;
-
   }
 };
 module.exports = {

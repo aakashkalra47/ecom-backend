@@ -1,9 +1,10 @@
-const express = require("express");
-const router = express.Router();    
-const {getProducts,getProductById}=require("../services/productService");
-const { errorFormatter } = require("../utils/errorFormatter");
+const express = require('express');
 
-router.get("/", async (req, res) => {
+const router = express.Router();
+const { getProducts, getProductById } = require('../services/productService');
+const { errorFormatter } = require('../utils/errorFormatter');
+
+router.get('/', async (req, res) => {
   try {
     const products = await getProducts(req.query);
     return res.status(200).json({ result: products });
@@ -13,7 +14,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id",async( req,res)=>{
+router.get('/:id', async (req, res) => {
   try {
     const products = await getProductById(req.params.id);
     return res.status(200).json({ result: products });
@@ -23,4 +24,4 @@ router.get("/:id",async( req,res)=>{
   }
 });
 
-module.exports=router;
+module.exports = router;

@@ -1,10 +1,11 @@
-const User = require("../models/users/user");
+const User = require('../models/users/user');
+
 const getAddresses = async (userId, address) => {
   const user = await User.findOneAndUpdate({ _id: userId });
   // .populate("wishlist")
   // .populate("cart.product");
   if (!user) {
-    let error = new Error("User Not Found");
+    const error = new Error('User Not Found');
     error.status = 404;
     throw error;
   } else {
@@ -19,12 +20,12 @@ const addAddress = async (userId, address) => {
         address,
       },
     },
-    { new: true }
-  )
-    // .populate("wishlist")
-    // .populate("cart.product");
+    { new: true },
+  );
+  // .populate("wishlist")
+  // .populate("cart.product");
   if (!updatedUser) {
-    let error = new Error("User Not Found");
+    const error = new Error('User Not Found');
     error.status = 404;
     throw error;
   } else {
@@ -33,18 +34,18 @@ const addAddress = async (userId, address) => {
 };
 const updateAddress = async (userId, address) => {
   const updatedUser = await User.findOneAndUpdate(
-    { _id: userId, "address._id": address._id },
+    { _id: userId, 'address._id': address._id },
     {
       $set: {
-        "address.$": address,
+        'address.$': address,
       },
     },
-    { new: true }
+    { new: true },
   )
-    .populate("wishlist")
-    .populate("cart.product");
+    .populate('wishlist')
+    .populate('cart.product');
   if (!updatedUser) {
-    let error = new Error("User Not Found");
+    const error = new Error('User Not Found');
     error.status = 404;
     throw error;
   } else {
@@ -53,7 +54,7 @@ const updateAddress = async (userId, address) => {
 };
 const deleteAddress = async (userId, address) => {
   const updatedUser = await User.findOneAndUpdate(
-    { _id: userId, "address._id": address._id },
+    { _id: userId, 'address._id': address._id },
     {
       $pull: {
         address: {
@@ -61,12 +62,12 @@ const deleteAddress = async (userId, address) => {
         },
       },
     },
-    { new: true }
-  )
-    // .populate("wishlist")
-    // .populate("cart.product");
+    { new: true },
+  );
+  // .populate("wishlist")
+  // .populate("cart.product");
   if (!updatedUser) {
-    let error = new Error("User Not Found");
+    const error = new Error('User Not Found');
     error.status = 404;
     throw error;
   } else {

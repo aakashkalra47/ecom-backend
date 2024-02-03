@@ -1,9 +1,11 @@
-const express = require("express");
-const router = express.Router();    
-const { login,signup,getUser } = require("../services/authService");
-const { errorFormatter } = require("../utils/errorFormatter");
-const {verifyToken}=require('../middlewares/authentication');
-router.post("/login", async (req, res) => {
+const express = require('express');
+
+const router = express.Router();
+const { login, signup, getUser } = require('../services/authService');
+const { errorFormatter } = require('../utils/errorFormatter');
+const { verifyToken } = require('../middlewares/authentication');
+
+router.post('/login', async (req, res) => {
   try {
     const loginData = await login(req.body);
     return res.status(200).json({ result: loginData });
@@ -12,7 +14,7 @@ router.post("/login", async (req, res) => {
     return res.status(status).json({ message });
   }
 });
-router.post("/signup", async (req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     const user = await signup(req.body);
     return res.status(200).json({ result: user });
@@ -21,7 +23,7 @@ router.post("/signup", async (req, res) => {
     return res.status(status).json({ message });
   }
 });
-router.get("/user",verifyToken, async (req,res)=>{
+router.get('/user', verifyToken, async (req, res) => {
   try {
     const user = await getUser(req.userId);
     return res.status(200).json({ result: user });
@@ -29,6 +31,5 @@ router.get("/user",verifyToken, async (req,res)=>{
     const { status, message } = errorFormatter(e);
     return res.status(status).json({ message });
   }
-})
+});
 module.exports = router;
-
